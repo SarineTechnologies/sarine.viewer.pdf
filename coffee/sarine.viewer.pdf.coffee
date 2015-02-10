@@ -13,4 +13,4 @@ class PDF extends Viewer
 	play : () -> return
 	stop : () -> return
 
-@Viewer.PDF = PDF
+@PDF = PDF
