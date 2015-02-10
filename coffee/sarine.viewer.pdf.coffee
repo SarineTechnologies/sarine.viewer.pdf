@@ -7,7 +7,7 @@ class PDF extends Viewer
 		@element.append(@embed)
 
 	first_init : ()->
-		@embed.attr({src: @src, type: 'application/pdf', width: '100%', height: '500'})		
+		@embed.attr({src: @src, type: 'application/pdf'})		
 
 	full_init : ()-> return
 	play : () ->
