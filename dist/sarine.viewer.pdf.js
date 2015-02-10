@@ -8,6 +8,7 @@
 
     function PDF(options) {
       PDF.__super__.constructor.call(this, options);
+      this.pdfName = options.pdfName;
     }
 
     PDF.prototype.convertElement = function() {
@@ -17,10 +18,10 @@
 
     PDF.prototype.first_init = function() {
       return this.embed.attr({
-        src: this.src,
+        src: this.src + this.pdfName,
         type: 'application/pdf',
         width: '100%',
-        height: '500'
+        height: '100%'
       });
     };
 
@@ -34,6 +35,6 @@
 
   })(Viewer);
 
-  this.Viewer.PDF = PDF;
+  this.PDF = PDF;
 
 }).call(this);
