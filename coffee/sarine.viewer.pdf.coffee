@@ -10,7 +10,7 @@ class PDF extends Viewer
 		@embed.attr({src: @src, type: 'application/pdf'})		
 
 	full_init : ()-> return
-	play : () ->
-	stop : () ->
+	play : () -> return
+	stop : () -> return
 
 @Viewer.PDF = PDF
