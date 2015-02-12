@@ -7,6 +7,9 @@ class PDF extends Viewer
 		super(options)
 		{@pdfName} = options		
 		
+=======
+		console.log('load pdf')
+>>>>>>> origin/master
 	convertElement : () ->
 		@embed = $("<embed>")				
 		@element.append(@embed)
