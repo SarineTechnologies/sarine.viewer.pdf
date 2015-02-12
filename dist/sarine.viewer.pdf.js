@@ -1,3 +1,9 @@
+
+/*!
+sarine.viewer.pdf - v0.0.3 -  Thursday, February 12th, 2015, 4:36:24 PM 
+ The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
+ */
+
 (function() {
   var PDF,
     __hasProp = {}.hasOwnProperty,
@@ -17,15 +23,24 @@
     };
 
     PDF.prototype.first_init = function() {
-      return this.embed.attr({
+      var defer;
+      defer = $.Deferred();
+      this.embed.attr({
         src: this.src + this.pdfName,
         type: 'application/pdf',
         width: '100%',
         height: '100%'
       });
+      defer.resolve(this);
+      return defer;
     };
 
-    PDF.prototype.full_init = function() {};
+    PDF.prototype.full_init = function() {
+      var defer;
+      defer = $.Deferred();
+      defer.resolve(this);
+      return defer;
+    };
 
     PDF.prototype.play = function() {};
 
