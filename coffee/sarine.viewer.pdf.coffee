@@ -2,6 +2,7 @@ class PDF extends Viewer
 	constructor: (options) ->
 		super(options)
 		{@pdfName} = options		
+<<<<<<< HEAD
 		
 	convertElement : () ->
 		@embed = $("<embed>")				
