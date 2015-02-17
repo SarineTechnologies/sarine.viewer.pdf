@@ -1,6 +1,6 @@
 {
   "name": "sarine.viewer.pdf",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "main": "dist/sarine.viewer.pdf.js",
   "ignore": [
     ".git",
