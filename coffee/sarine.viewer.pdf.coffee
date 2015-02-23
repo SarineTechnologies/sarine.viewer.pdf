@@ -1,5 +1,5 @@
 ###!
-sarine.viewer.pdf - v0.0.11 -  Monday, February 23rd, 2015, 2:18:25 PM 
+sarine.viewer.pdf - v0.0.12 -  Monday, February 23rd, 2015, 2:20:35 PM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
 ###
 class PDF extends Viewer
