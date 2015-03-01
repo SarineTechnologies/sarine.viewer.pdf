@@ -1,6 +1,6 @@
 
 /*!
-sarine.viewer.pdf - v0.0.13 -  Sunday, March 1st, 2015, 12:02:24 PM 
+sarine.viewer.pdf - v0.0.13 -  Sunday, March 1st, 2015, 12:25:07 PM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
  */
 
@@ -92,7 +92,7 @@ sarine.viewer.pdf - v0.0.13 -  Sunday, March 1st, 2015, 12:02:24 PM
         width: '100%',
         height: '100%'
       });
-      htmlVal = "<p>It appears you don't have Adobe Reader or PDF support in this web browser. <a target='_blank' href='" + this.src + this.pdfName + "' target='_blank'>click here to download the PDF.</a></p>";
+      htmlVal = "<p>It appears you don't have Adobe Reader or PDF support in this web browser. <a target='_blank' href='" + this.src + this.pdfName + "'>click here to download the PDF.</a></p>";
       this.object.html(htmlVal);
       defer.resolve(this);
       return defer;
