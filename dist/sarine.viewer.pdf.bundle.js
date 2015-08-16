@@ -1,6 +1,6 @@
 
 /*!
-sarine.viewer.pdf - v0.6.0 -  Tuesday, August 11th, 2015, 11:48:37 AM 
+sarine.viewer.pdf - v0.6.0 -  Sunday, August 16th, 2015, 10:16:14 AM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
  */
 
@@ -75,7 +75,8 @@ sarine.viewer.pdf - v0.6.0 -  Tuesday, August 11th, 2015, 11:48:37 AM
 
     function PDF(options) {
       PDF.__super__.constructor.call(this, options);
-      this.pdfName = options.pdfName;
+      this.pdfName = options.pdfName, this.limitSize = options.limitSize;
+      this.limitSize = this.limitSize || 250;
     }
 
     PDF.prototype.convertElement = function() {
@@ -89,15 +90,19 @@ sarine.viewer.pdf - v0.6.0 -  Tuesday, August 11th, 2015, 11:48:37 AM
       _t = this;
       this.previewSrc = this.fullSrc.indexOf('?') === -1 ? this.fullSrc + '.png' : this.fullSrc.split('?')[0] + '.png?' + this.fullSrc.split('?')[1];
       return this.loadImage(this.previewSrc).then(function(img) {
-        var image, imgName;
+        var image, imgName, styleAttr;
         image = $("<img>");
         imgName = 'PDF-thumb';
+        styleAttr = 'max-width:' + _t.limitSize + 'px;max-height:' + _t.limitSize + 'px;cursor:pointer;';
         image.attr({
           src: img.src,
           alt: imgName,
           "class": imgName,
-          style: 'max-width:250px;max-height:250px;cursor:pointer;'
+          style: styleAttr
         });
+        if (img.src === _t.callbackPic) {
+          image.addClass('no_stone');
+        }
         _t.element.append(image);
         image.on('click', (function(_this) {
           return function(e) {
