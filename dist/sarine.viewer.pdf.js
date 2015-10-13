@@ -1,6 +1,6 @@
 
 /*!
-sarine.viewer.pdf - v0.3.0 -  Thursday, July 9th, 2015, 1:32:11 PM 
+sarine.viewer.pdf - v0.8.0 -  Monday, September 21st, 2015, 9:55:02 AM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
  */
 
@@ -14,29 +14,45 @@ sarine.viewer.pdf - v0.3.0 -  Thursday, July 9th, 2015, 1:32:11 PM
 
     function PDF(options) {
       PDF.__super__.constructor.call(this, options);
-      this.pdfName = options.pdfName;
-      console.log('load pdf');
+      this.pdfName = options.pdfName, this.limitSize = options.limitSize;
+      this.limitSize = this.limitSize || 250;
     }
 
     PDF.prototype.convertElement = function() {
-      this.object = $("<object>");
-      return this.element.append(this.object);
+      return this.element;
     };
 
     PDF.prototype.first_init = function() {
-      var defer, htmlVal;
+      var defer, _t;
       defer = $.Deferred();
       this.fullSrc = this.src.indexOf('##FILE_NAME##') !== -1 ? this.src.replace('##FILE_NAME##', this.pdfName) : this.src + this.pdfName;
-      this.object.attr({
-        data: this.fullSrc,
-        type: 'application/pdf',
-        width: '100%',
-        height: '100%'
+      _t = this;
+      this.previewSrc = this.fullSrc.indexOf('?') === -1 ? this.fullSrc + '.png' : this.fullSrc.split('?')[0] + '.png?' + this.fullSrc.split('?')[1];
+      return this.loadImage(this.previewSrc).then(function(img) {
+        var image, imgName, styleAttr;
+        image = $("<img>");
+        imgName = 'PDF-thumb';
+        styleAttr = 'max-width:' + _t.limitSize + 'px;max-height:' + _t.limitSize + 'px;';
+        image.attr({
+          src: img.src,
+          alt: imgName,
+          "class": imgName,
+          style: styleAttr
+        });
+        if (img.src === _t.callbackPic) {
+          image.addClass('no_stone');
+        }
+        _t.element.append(image);
+        if (!image.hasClass('no_stone')) {
+          image.on('click', (function(_this) {
+            return function(e) {
+              return window.open(_t.fullSrc, '_blank');
+            };
+          })(this));
+          image.attr('style', image.attr('style') + 'cursor:pointer;');
+        }
+        return defer.resolve(_t);
       });
-      htmlVal = "<p>It appears you don't have Adobe Reader or PDF support in this web browser. <a target='_blank' href='" + this.src + this.pdfName + "'>click here to download the PDF.</a></p>";
-      this.object.html(htmlVal);
-      defer.resolve(this);
-      return defer;
     };
 
     PDF.prototype.full_init = function() {
