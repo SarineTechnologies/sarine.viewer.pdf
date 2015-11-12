@@ -1,5 +1,5 @@
 ###!
-sarine.viewer.pdf - v0.8.0 -  Monday, September 21st, 2015, 9:55:02 AM 
+sarine.viewer.pdf - v0.8.0 -  Thursday, November 12th, 2015, 2:26:30 PM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
 ###
 class PDF extends Viewer
@@ -19,15 +19,35 @@ class PDF extends Viewer
 		@loadImage(@previewSrc).then((img)->  	
 				image = $("<img>")
 				imgName = 'PDF-thumb'	
-				styleAttr = 'max-width:' + _t.limitSize + 'px;max-height:' + _t.limitSize + 'px;' 			
-				image.attr({src : img.src, alt : imgName, class : imgName, style : styleAttr})
+				
+				imgDimensions = _t.scaleImage(img)
+				image.attr({src : img.src, alt : imgName, class : imgName, width : imgDimensions.width, height : imgDimensions.height})
 				if img.src == _t.callbackPic then image.addClass 'no_stone'
 				_t.element.append(image)
 				if(!image.hasClass('no_stone'))
 					image.on 'click', (e) => window.open(_t.fullSrc , '_blank') 
-					image.attr('style', image.attr('style') + 'cursor:pointer;')
+					image.attr {'style':'cursor:pointer;'}
 				defer.resolve(_t)												
 			)
+
+	scaleImage : (img)=>
+		imgDimensions = {}
+		imgDimensions.width = img.width
+		imgDimensions.height = img.height 
+		if(img.width < @limitSize || img.height < @limitSize)
+			return imgDimensions
+
+		widthBigger = img.width > img.height 
+		if(widthBigger)
+			scale = img.width / @limitSize
+			imgDimensions.width = @limitSize
+			imgDimensions.height = img.height / scale
+		else
+			scale = img.height / @limitSize
+			imgDimensions.height = @limitSize
+			imgDimensions.width = img.width / scale
+
+		return imgDimensions
 
 	full_init : ()-> 
 		defer = $.Deferred() 
@@ -37,5 +57,4 @@ class PDF extends Viewer
 	stop : () -> return
 
 @PDF = PDF
- 
  
