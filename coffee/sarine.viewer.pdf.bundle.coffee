@@ -1,5 +1,5 @@
 ###!
-sarine.viewer.pdf - v0.8.0 -  Tuesday, April 12th, 2016, 11:18:04 AM 
+sarine.viewer.pdf - v0.8.0 -  Tuesday, April 12th, 2016, 4:15:06 PM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
 ###
 
@@ -37,37 +37,35 @@ class Viewer
 class PDF extends Viewer
 	constructor: (options) ->
 		super(options)
-		{@pdfName, @limitSize} = options   	
-		@limitSize = @limitSize || 250	
-		
-	convertElement : () -> 
+		{@pdfName, @limitSize} = options
+		@limitSize = @limitSize || 250
+
+	convertElement : () ->
 		@element
 
-	first_init : ()-> 
+	first_init : ()->
 		defer = $.Deferred()
-		@fullSrc = if @src.indexOf('##FILE_NAME##') != -1 then @src.replace '##FILE_NAME##' , @pdfName else @src + @pdfName 
-		_t = @	 
-		@previewSrc = if @fullSrc.indexOf('?') == -1 then @fullSrc + '.png' else (@fullSrc.split('?')[0] + '.png?' + @fullSrc.split('?')[1]) 
-		@loadImage(@previewSrc).then((img)->  	
-				image = $("<img>")
-				imgName = 'PDF-thumb'	
-				styleAttr = 'max-width:' + _t.limitSize + 'px;max-height:' + _t.limitSize + 'px;' 			
-				image.attr({src : img.src, alt : imgName, class : imgName, style : styleAttr})
-				if (img.src.indexOf('data:image') != -1 || img.src == _t.callbackPic)
-					image.addClass('no_stone')
+		@fullSrc = if @src.indexOf('##FILE_NAME##') != -1 then @src.replace '##FILE_NAME##' , @pdfName else @src + @pdfName
+		_t = @
+		@previewSrc = if @fullSrc.indexOf('?') == -1 then @fullSrc + '.png' else (@fullSrc.split('?')[0] + '.png?' + @fullSrc.split('?')[1])
+		@loadImage(@previewSrc).then((img)->
+			image = $("<img>")
+			imgName = 'PDF-thumb'
+			styleAttr = 'max-width:' + _t.limitSize + 'px;max-height:' + _t.limitSize + 'px;'
+			image.attr({src : img.src, alt : imgName, class : imgName, style : styleAttr})
+			if img.src == _t.callbackPic then image.addClass 'no_stone'
+			_t.element.append(image)
+			if(!image.hasClass('no_stone'))
+				image.on 'click', (e) => window.open(_t.fullSrc , '_blank')
+				image.attr('style', image.attr('style') + 'cursor:pointer;')
+			defer.resolve(_t)
+		)
 
-				_t.element.append(image)
-				if(!image.hasClass('no_stone'))
-					image.on 'click', (e) => window.open(_t.fullSrc , '_blank') 
-					image.attr('style', image.attr('style') + 'cursor:pointer;')
-				defer.resolve(_t)												
-			)
-
-	full_init : ()-> 
-		defer = $.Deferred() 
-		defer.resolve(@)		
-		defer  
-	play : () -> return 
+	full_init : ()->
+		defer = $.Deferred()
+		defer.resolve(@)
+		defer
+	play : () -> return
 	stop : () -> return
 
 @PDF = PDF
