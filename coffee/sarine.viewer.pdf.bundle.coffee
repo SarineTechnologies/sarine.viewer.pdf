@@ -1,5 +1,5 @@
 ###!
-sarine.viewer.pdf - v0.8.0 -  Monday, September 21st, 2015, 9:55:02 AM 
+sarine.viewer.pdf - v0.8.0 -  Tuesday, April 12th, 2016, 11:18:04 AM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
 ###
 
@@ -53,7 +53,9 @@ class PDF extends Viewer
 				imgName = 'PDF-thumb'	
 				styleAttr = 'max-width:' + _t.limitSize + 'px;max-height:' + _t.limitSize + 'px;' 			
 				image.attr({src : img.src, alt : imgName, class : imgName, style : styleAttr})
-				if img.src == _t.callbackPic then image.addClass 'no_stone'
+				if (img.src.indexOf('data:image') != -1 || img.src == _t.callbackPic)
+					image.addClass('no_stone')
+
 				_t.element.append(image)
 				if(!image.hasClass('no_stone'))
 					image.on 'click', (e) => window.open(_t.fullSrc , '_blank') 
