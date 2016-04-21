@@ -1,5 +1,5 @@
 ###!
-sarine.viewer.pdf - v0.10.0 -  Tuesday, April 19th, 2016, 9:46:03 AM 
+sarine.viewer.pdf - v0.10.0 -  Thursday, April 21st, 2016, 11:41:56 AM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
 ###
 
@@ -47,7 +47,8 @@ class PDF extends Viewer
 		defer = $.Deferred()
 		@fullSrc = if @src.indexOf('##FILE_NAME##') != -1 then @src.replace '##FILE_NAME##' , @pdfName else @src + @pdfName 
 		_t = @	 
-		@previewSrc = if @fullSrc.indexOf('?') == -1 then @fullSrc + '.png' else (@fullSrc.split('?')[0] + '.png?' + @fullSrc.split('?')[1]) 
+		timestamp = new Date().getTime()
+		@previewSrc = if @fullSrc.indexOf('?') == -1 then @fullSrc + '.png?' + timestamp else (@fullSrc.split('?')[0] + '.png?' + @fullSrc.split('?')[1] + timestamp) 
 		@loadImage(@previewSrc).then((img)->  	
 				image = $("<img>")
 				imgName = 'PDF-thumb'	
