@@ -1,6 +1,6 @@
 
 /*!
-sarine.viewer.pdf - v0.10.0 -  Tuesday, April 19th, 2016, 9:46:03 AM 
+sarine.viewer.pdf - v0.10.0 -  Monday, August 15th, 2016, 11:10:40 AM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
  */
 
@@ -92,28 +92,25 @@ sarine.viewer.pdf - v0.10.0 -  Tuesday, April 19th, 2016, 9:46:03 AM
       _t = this;
       this.previewSrc = this.fullSrc.indexOf('?') === -1 ? this.fullSrc + '.png' : this.fullSrc.split('?')[0] + '.png?' + this.fullSrc.split('?')[1];
       return this.loadImage(this.previewSrc).then(function(img) {
-        var image, imgDimensions, imgName;
-        image = $("<img>");
-        imgName = 'PDF-thumb';
+        var canvas, ctx, imgDimensions, imgName;
+        canvas = $("<canvas>");
+        imgName = img.src === _t.callbackPic || img.src.indexOf('data:image') !== -1 ? 'PDF-thumb no_stone' : 'PDF-thumb';
+        ctx = canvas[0].getContext('2d');
         imgDimensions = _t.scaleImage(img);
-        image.attr({
-          src: img.src,
-          alt: imgName,
-          "class": imgName,
+        canvas.attr({
           width: imgDimensions.width,
-          height: imgDimensions.height
+          height: imgDimensions.height,
+          "class": imgName
         });
-        if (img.src.indexOf('data:image') !== -1 || img.src === _t.callbackPic) {
-          image.addClass('no_stone');
-        }
-        _t.element.append(image);
-        if (!image.hasClass('no_stone')) {
-          image.on('click', (function(_this) {
+        ctx.drawImage(img, 0, 0, imgDimensions.width, imgDimensions.height);
+        _t.element.append(canvas);
+        if (!canvas.hasClass('no_stone')) {
+          canvas.on('click', (function(_this) {
             return function(e) {
               return window.open(_t.fullSrc, '_blank');
             };
           })(this));
-          image.attr({
+          canvas.attr({
             'style': 'cursor:pointer;'
           });
         }
