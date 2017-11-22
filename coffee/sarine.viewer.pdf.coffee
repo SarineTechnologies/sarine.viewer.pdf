@@ -1,5 +1,5 @@
 ###!
-sarine.viewer.pdf - v0.11.0 -  Tuesday, November 21st, 2017, 6:43:45 AM 
+sarine.viewer.pdf - v0.11.0 -  Wednesday, November 22nd, 2017, 7:33:09 AM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
 ###
 class PDF extends Viewer
@@ -13,9 +13,11 @@ class PDF extends Viewer
 
 	first_init : ()-> 
 		defer = $.Deferred()
-		@fullSrc = if @src.indexOf('##FILE_NAME##') != -1 then @src.replace '##FILE_NAME##' , @pdfName else @src + @pdfName 
+		#@fullSrc = if @src.indexOf('##FILE_NAME##') != -1 then @src.replace '##FILE_NAME##' , @pdfName else @src + @pdfName 
+		@fullSrc = @src
+
 		_t = @	 
-		@previewSrc = if @fullSrc.indexOf('?') == -1 then @fullSrc + '.png' else (@fullSrc.split('?')[0] + '.png?' + @fullSrc.split('?')[1]) 
+		@previewSrc = if @fullSrc.indexOf('?') == -1 then @fullSrc + '.png' else (@fullSrc.split('?')[0] + '.png?' + @fullSrc.split('?')[1])		
 		@loadImage(@previewSrc).then((img)->  	
 				canvas = $("<canvas>") 
 				imgName = if (img.src == _t.callbackPic || img.src.indexOf('data:image') != -1) then 'PDF-thumb no_stone' else 'PDF-thumb'	
