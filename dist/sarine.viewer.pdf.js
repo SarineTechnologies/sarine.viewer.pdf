@@ -1,6 +1,6 @@
 
 /*!
-sarine.viewer.pdf - v0.11.0 -  Monday, August 15th, 2016, 11:32:29 AM 
+sarine.viewer.pdf - v0.11.0 -  Thursday, November 23rd, 2017, 1:47:40 AM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
  */
 
@@ -27,7 +27,7 @@ sarine.viewer.pdf - v0.11.0 -  Monday, August 15th, 2016, 11:32:29 AM
     PDF.prototype.first_init = function() {
       var defer, _t;
       defer = $.Deferred();
-      this.fullSrc = this.src.indexOf('##FILE_NAME##') !== -1 ? this.src.replace('##FILE_NAME##', this.pdfName) : this.src + this.pdfName;
+      this.fullSrc = this.src;
       _t = this;
       this.previewSrc = this.fullSrc.indexOf('?') === -1 ? this.fullSrc + '.png' : this.fullSrc.split('?')[0] + '.png?' + this.fullSrc.split('?')[1];
       return this.loadImage(this.previewSrc).then(function(img) {
