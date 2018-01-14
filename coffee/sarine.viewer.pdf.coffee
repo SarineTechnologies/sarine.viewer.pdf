@@ -1,5 +1,5 @@
 ###!
-sarine.viewer.pdf - v0.14.7 -  Sunday, January 7th, 2018, 1:33:39 PM 
+sarine.viewer.pdf - v0.14.7 -  Sunday, January 14th, 2018, 2:31:09 PM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
 ###
 class PDF extends Viewer
@@ -49,24 +49,34 @@ class PDF extends Viewer
 		if (pdfContainer.length == 0)
 			pdfContainer = $('<div id="iframe-pdf-container" class="pdf-popup-container">')
 			pdfContainerInside =$('<div class="iframe-pdf-inside-container ">') 
+			pdfDiv= $('<div class="iframe-pdf-div">') 
 			if Device.isMobileOrTablet() then pdfContainerInside.addClass('mobile')
 			if _t.inIframe() then pdfContainer.addClass('iframe-pdf-container-hide')
 			sliderHeight = sliderWrap.height()                                                
-			iframeElement = $('<iframe id="iframe-pdf" frameborder=0></iframe>')
+			iframeElement = $('<iframe id="iframe-pdf" frameborder=0  type="application/pdf"></iframe>')
+			domain = window.stones[0].viewersBaseUrl.split('/content')[0]
+			viewer = "/web-sites/pdf-viewer-js/web/viewer.html/?file="
+			url = [domain, viewer,src]
+			pdfUrl = url.join()	
+			iframeElement.attr 'src', pdfUrl
+			#iframeElement.attr 'src', "http://d3oayecwxm3wp6.cloudfront.net/qa4/web-sites/legal/js/LegalJsSDK/PDFViewer/PDFViewerJs.html?file=" + src
+
 			closeButton = $('<input type="button" value="Close" id="closePdfReport" class="close-popup-report"/>')
 			openAsLink = $('<div class="open-pdf-link-container"><a href="' + src + '" target="_blank" id="open-pdf-link"  ><svg class="icon icon-external-link">
 <title>external-link</title>
 <path d="M22 14.5v5c0 2.484-2.016 4.5-4.5 4.5h-13c-2.484 0-4.5-2.016-4.5-4.5v-13c0-2.484 2.016-4.5 4.5-4.5h11c0.281 0 0.5 0.219 0.5 0.5v1c0 0.281-0.219 0.5-0.5 0.5h-11c-1.375 0-2.5 1.125-2.5 2.5v13c0 1.375 1.125 2.5 2.5 2.5h13c1.375 0 2.5-1.125 2.5-2.5v-5c0-0.281 0.219-0.5 0.5-0.5h1c0.281 0 0.5 0.219 0.5 0.5zM28 1v8c0 0.547-0.453 1-1 1-0.266 0-0.516-0.109-0.703-0.297l-2.75-2.75-10.187 10.187c-0.094 0.094-0.234 0.156-0.359 0.156s-0.266-0.063-0.359-0.156l-1.781-1.781c-0.094-0.094-0.156-0.234-0.156-0.359s0.063-0.266 0.156-0.359l10.187-10.187-2.75-2.75c-0.187-0.187-0.297-0.438-0.297-0.703 0-0.547 0.453-1 1-1h8c0.547 0 1 0.453 1 1z"></path>
 </svg></a></div>')
 
-			pdfContainerInside.append openAsLink
-			pdfContainerInside.append iframeElement
-			pdfContainerInside.append closeButton
+			pdfDiv.append openAsLink
+			pdfDiv.append iframeElement
+			pdfDiv.append closeButton
+
+			pdfContainerInside.append pdfDiv
 
 			pdfContainer.append pdfContainerInside
 			sliderWrap.before pdfContainer
 
-		iframeElement.attr 'src', src
+
 
 		pdfContainer.css 'display', 'block'
 		closeButton.on 'click', (=>
