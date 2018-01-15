@@ -1,5 +1,5 @@
 ###!
-sarine.viewer.pdf - v0.14.7 -  Sunday, January 14th, 2018, 2:31:09 PM 
+sarine.viewer.pdf - v0.14.7 -  Monday, January 15th, 2018, 11:37:02 AM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
 ###
 class PDF extends Viewer
@@ -55,9 +55,9 @@ class PDF extends Viewer
 			sliderHeight = sliderWrap.height()                                                
 			iframeElement = $('<iframe id="iframe-pdf" frameborder=0  type="application/pdf"></iframe>')
 			domain = window.stones[0].viewersBaseUrl.split('/content')[0]
-			viewer = "/web-sites/pdf-viewer-js/web/viewer.html/?file="
+			viewer = "/web-sites/pdf-viewer-js/web/viewer.html?file="
 			url = [domain, viewer,src]
-			pdfUrl = url.join()	
+			pdfUrl = url.join("")	
 			iframeElement.attr 'src', pdfUrl
 			#iframeElement.attr 'src', "http://d3oayecwxm3wp6.cloudfront.net/qa4/web-sites/legal/js/LegalJsSDK/PDFViewer/PDFViewerJs.html?file=" + src
 
