@@ -1,5 +1,5 @@
 ###!
-sarine.viewer.pdf - v0.14.7 -  Monday, January 15th, 2018, 1:21:40 PM 
+sarine.viewer.pdf - v0.14.7 -  Wednesday, January 17th, 2018, 2:45:34 PM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
 ###
 class PDF extends Viewer
@@ -7,6 +7,7 @@ class PDF extends Viewer
 		super(options)
 		{@pdfName, @limitSize, @mode} = options   	
 		@limitSize = @limitSize || 250	
+		@baseUrl = options.baseUrl + "atomic/v1/assets/"
 		
 	convertElement : () -> 
 		@element
@@ -49,18 +50,23 @@ class PDF extends Viewer
 		if (pdfContainer.length == 0)
 			pdfContainer = $('<div id="iframe-pdf-container" class="pdf-popup-container">')
 			pdfContainerInside =$('<div class="iframe-pdf-inside-container ">') 
-			pdfDiv= $('<div class="iframe-pdf-div">') 
+			pdfDiv= $('<div class="iframe-pdf-div" style="display:none">') 
 			if Device.isMobileOrTablet() then pdfContainerInside.addClass('mobile')
-			if _t.inIframe() then pdfContainer.addClass('iframe-pdf-container-hide')
-			sliderHeight = sliderWrap.height()                                                
-			iframeElement = $('<iframe id="iframe-pdf" frameborder=0  type="application/pdf"></iframe>')
-			domain = window.stones[0].viewersBaseUrl.split('/content')[0]
-			viewer = "/web-sites/pdf-viewer-js/web/viewer.html?file="
-			url = [domain, viewer,src]
-			pdfUrl = url.join("")	
-			iframeElement.attr 'src', pdfUrl
+			if _t.inIframe() then pdfContainer.addClass('iframe-pdf-container-hide')  			
+			#sliderHeight = sliderWrap.height()                                                
+			#iframeElement = $('<iframe id="iframe-pdf" frameborder=0  type="application/pdf"></iframe>')
+
+			#domain = window.stones[0].viewersBaseUrl.split('/content')[0]
+			#viewer = "/web-sites/pdf-viewer-js/web/viewer.html?file="
+			#url = [domain, viewer,src]
+			#pdfUrl = url.join("")	
+			#iframeElement.attr 'src', pdfUrl
 			#iframeElement.attr 'src', "http://d3oayecwxm3wp6.cloudfront.net/qa4/web-sites/legal/js/LegalJsSDK/PDFViewer/PDFViewerJs.html?file=" + src
 
+			prev='<svg class="icon icon-angle-left"><path d="M15.429 9v1.286c0 0.683-0.452 1.286-1.175 1.286h-7.071l2.943 2.953c0.241 0.231 0.382 0.563 0.382 0.904s-0.141 0.673-0.382 0.904l-0.753 0.763c-0.231 0.231-0.563 0.372-0.904 0.372s-0.673-0.141-0.914-0.372l-6.539-6.549c-0.231-0.231-0.372-0.563-0.372-0.904s0.141-0.673 0.372-0.914l6.539-6.529c0.241-0.241 0.573-0.382 0.914-0.382s0.663 0.141 0.904 0.382l0.753 0.743c0.241 0.241 0.382 0.573 0.382 0.914s-0.141 0.673-0.382 0.914l-2.943 2.943h7.071c0.723 0 1.175 0.603 1.175 1.286z"></path></svg>'
+			next='<svg class="icon icon-angle-right"><path d="M14.786 9.643c0 0.342-0.131 0.673-0.372 0.914l-6.539 6.539c-0.241 0.231-0.573 0.372-0.914 0.372s-0.663-0.141-0.904-0.372l-0.753-0.753c-0.241-0.241-0.382-0.573-0.382-0.914s0.141-0.673 0.382-0.914l2.943-2.943h-7.071c-0.723 0-1.175-0.603-1.175-1.286v-1.286c0-0.683 0.452-1.286 1.175-1.286h7.071l-2.943-2.953c-0.241-0.231-0.382-0.563-0.382-0.904s0.141-0.673 0.382-0.904l0.753-0.753c0.241-0.241 0.563-0.382 0.904-0.382s0.673 0.141 0.914 0.382l6.539 6.539c0.241 0.231 0.372 0.563 0.372 0.904z"></path></svg>'
+			pagerDiv='<div id="pdf-pager">  <button id="prev">' + prev + '</button>  <button id="next">' + next + '</button></div>'
+			iframeElement = $('<div id="iframe-pdf"><canvas id="the-canvas" style="width:100%;"></canvas></div>')
 			closeButton = $('<input type="button" value="Close" id="closePdfReport" class="close-popup-report"/>')
 			openAsLink = $('<div class="open-pdf-link-container"><a href="' + src + '" target="_blank" id="open-pdf-link"  ><svg class="icon icon-external-link">
 <title>external-link</title>
@@ -68,6 +74,7 @@ class PDF extends Viewer
 </svg></a></div>')
 
 			pdfDiv.append openAsLink
+			openAsLink.append pagerDiv
 			pdfDiv.append iframeElement
 			pdfDiv.append closeButton
 
@@ -75,6 +82,7 @@ class PDF extends Viewer
 
 			pdfContainer.append pdfContainerInside
 			sliderWrap.before pdfContainer
+			_t.render_pdf(src)
 
 
 
@@ -116,6 +124,86 @@ class PDF extends Viewer
 		defer  
 	play : () -> return 
 	stop : () -> return
+
+	onPrevPage : () ->
+		_this=@
+		if(_this.pageNum <= 1) 
+			return
+		_this.pageNum-- 		
+		_this.queueRenderPage(_this.pageNum)
+
+	onNextPage :() ->		
+		_this=@
+		if(_this.pageNum >= _this.pdfDoc.numPages)  
+			return
+		_this.pageNum++  	 
+		_this.queueRenderPage(_this.pageNum)
+
+# If absolute URL from the remote server is provided, configure the CORS
+# header on that server.
+	render_pdf : (url)-> 
+		_t = @   		
+		#url = '//cdn.mozilla.net/pdfjs/tracemonkey.pdf'
+
+	# The workerSrc property shall be specified.
+		
+		_t.pdfDoc = null   		
+		_t.pageNum = 1    	
+		_t.pageRendering = false    	
+		_t.pageNumPending = null    	
+		_t.scale = 0.8    	
+		_t.canvas = document.getElementById('the-canvas')    	
+		_t.ctx = _t.canvas.getContext('2d')		
+		assets = [{element:'script',src: '//mozilla.github.io/pdf.js/build/pdf.js' }]		#@baseUrl + 'pdf.js'
+		_t.loadAssets(assets,()->		  
+			PDFJS.workerSrc =  '//mozilla.github.io/pdf.js/build/pdf.worker.js'  #@baseUrl + 'pdf.worker.js'
+			PDFJS.getDocument(url).then (pdfDoc_) ->
+				_t.pdfDoc = pdfDoc_
+				if(_t.pdfDoc.numPages > 1)
+					document.getElementById('prev').addEventListener('click', _t.onPrevPage.bind(_t))
+					document.getElementById('next').addEventListener('click', _t.onNextPage.bind(_t))
+				else
+					$("#pdf-pager").css 'display', 'none' 
+				_t.renderPage(_t.pageNum))
+
+	renderPage : (num) ->
+		_t = @  		
+		_t.pageRendering = true		
+		_t.pdfDoc.getPage(num).then (page) ->    	 	
+			viewport = page.getViewport(1)
+			desiredWidth = _t.canvas.width
+			
+			scale =  desiredWidth / viewport.width
+
+			scaledViewport = page.getViewport(scale)
+
+			_t.canvas.height = scaledViewport.height
+
+			renderContext = 	      		
+				canvasContext: _t.ctx,	      		
+				viewport: scaledViewport	    	
+			renderTask = page.render(renderContext)	    	
+			renderTask.promise.then () ->
+				_t.pageRendering = false	
+				$(".iframe-pdf-div").css "display","block"
+				if(_t.pageNumPending != null) 
+					_t.renderPage(_t.pageNumPending)
+					_t.pageNumPending = null
+
+	
+
+
+#If another page rendering in progress, waits until the rendering is
+ # finised. Otherwise, executes rendering immediately.
+	queueRenderPage : (num) ->
+		_t = @  		
+		if(_t.pageRendering) 
+  			_t.pageNumPending = num
+  		else  _t.renderPage(num)
+ 
+#Displays previous page.
+
+
 
 @PDF = PDF
  
