@@ -1,6 +1,6 @@
 
 /*!
-sarine.viewer.pdf - v0.14.7 -  Wednesday, January 17th, 2018, 2:45:34 PM 
+sarine.viewer.pdf - v0.14.7 -  Thursday, January 18th, 2018, 11:31:23 AM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
  */
 
@@ -75,7 +75,7 @@ sarine.viewer.pdf - v0.14.7 -  Wednesday, January 17th, 2018, 2:45:34 PM
     };
 
     PDF.prototype.initPopup = function(src) {
-      var closeButton, iframeElement, next, openAsLink, pagerDiv, pdfContainer, pdfContainerInside, pdfDiv, prev, sliderWrap, _t;
+      var closeButton, iframeElement, loader, next, openAsLink, pagerDiv, pdfContainer, pdfContainerInside, pdfDiv, prev, sliderWrap, _t;
       _t = this;
       sliderWrap = $("body").children().first();
       pdfContainer = $('#iframe-pdf-container');
@@ -94,14 +94,16 @@ sarine.viewer.pdf - v0.14.7 -  Wednesday, January 17th, 2018, 2:45:34 PM
         prev = '<svg class="icon icon-angle-left"><path d="M15.429 9v1.286c0 0.683-0.452 1.286-1.175 1.286h-7.071l2.943 2.953c0.241 0.231 0.382 0.563 0.382 0.904s-0.141 0.673-0.382 0.904l-0.753 0.763c-0.231 0.231-0.563 0.372-0.904 0.372s-0.673-0.141-0.914-0.372l-6.539-6.549c-0.231-0.231-0.372-0.563-0.372-0.904s0.141-0.673 0.372-0.914l6.539-6.529c0.241-0.241 0.573-0.382 0.914-0.382s0.663 0.141 0.904 0.382l0.753 0.743c0.241 0.241 0.382 0.573 0.382 0.914s-0.141 0.673-0.382 0.914l-2.943 2.943h7.071c0.723 0 1.175 0.603 1.175 1.286z"></path></svg>';
         next = '<svg class="icon icon-angle-right"><path d="M14.786 9.643c0 0.342-0.131 0.673-0.372 0.914l-6.539 6.539c-0.241 0.231-0.573 0.372-0.914 0.372s-0.663-0.141-0.904-0.372l-0.753-0.753c-0.241-0.241-0.382-0.573-0.382-0.914s0.141-0.673 0.382-0.914l2.943-2.943h-7.071c-0.723 0-1.175-0.603-1.175-1.286v-1.286c0-0.683 0.452-1.286 1.175-1.286h7.071l-2.943-2.953c-0.241-0.231-0.382-0.563-0.382-0.904s0.141-0.673 0.382-0.904l0.753-0.753c0.241-0.241 0.563-0.382 0.904-0.382s0.673 0.141 0.914 0.382l6.539 6.539c0.241 0.231 0.372 0.563 0.372 0.904z"></path></svg>';
         pagerDiv = '<div id="pdf-pager">  <button id="prev">' + prev + '</button>  <button id="next">' + next + '</button></div>';
-        iframeElement = $('<div id="iframe-pdf"><canvas id="the-canvas" style="width:100%;"></canvas></div>');
+        iframeElement = $('<div id="iframe-pdf"><canvas id="the-canvas"></canvas></div>');
         closeButton = $('<input type="button" value="Close" id="closePdfReport" class="close-popup-report"/>');
         openAsLink = $('<div class="open-pdf-link-container"><a href="' + src + '" target="_blank" id="open-pdf-link"  ><svg class="icon icon-external-link"> <title>external-link</title> <path d="M14.143 9.321v3.214c0 1.597-1.296 2.893-2.893 2.893h-8.357c-1.597 0-2.893-1.296-2.893-2.893v-8.357c0-1.597 1.296-2.893 2.893-2.893h7.071c0.181 0 0.321 0.141 0.321 0.321v0.643c0 0.181-0.141 0.321-0.321 0.321h-7.071c-0.884 0-1.607 0.723-1.607 1.607v8.357c0 0.884 0.723 1.607 1.607 1.607h8.357c0.884 0 1.607-0.723 1.607-1.607v-3.214c0-0.181 0.141-0.321 0.321-0.321h0.643c0.181 0 0.321 0.141 0.321 0.321zM18 0.643v5.143c0 0.352-0.291 0.643-0.643 0.643-0.171 0-0.331-0.070-0.452-0.191l-1.768-1.768-6.549 6.549c-0.060 0.060-0.151 0.1-0.231 0.1s-0.171-0.040-0.231-0.1l-1.145-1.145c-0.060-0.060-0.1-0.151-0.1-0.231s0.040-0.171 0.1-0.231l6.549-6.549-1.768-1.768c-0.121-0.121-0.191-0.281-0.191-0.452 0-0.352 0.291-0.643 0.643-0.643h5.143c0.352 0 0.643 0.291 0.643 0.643z"></path> </svg></a></div>');
+        loader = '<div class="loader popup-loader"><div class="pre-load"></div></div>';
         pdfDiv.append(openAsLink);
         openAsLink.append(pagerDiv);
         pdfDiv.append(iframeElement);
         pdfDiv.append(closeButton);
         pdfContainerInside.append(pdfDiv);
+        pdfContainerInside.append(loader);
         pdfContainer.append(pdfContainerInside);
         sliderWrap.before(pdfContainer);
         _t.render_pdf(src);
@@ -215,9 +217,11 @@ sarine.viewer.pdf - v0.14.7 -  Wednesday, January 17th, 2018, 2:45:34 PM
         var desiredWidth, renderContext, renderTask, scale, scaledViewport, viewport;
         viewport = page.getViewport(1);
         desiredWidth = _t.canvas.width;
+        desiredWidth = document.getElementsByClassName("iframe-pdf-inside-container")[0].offsetWidth;
         scale = desiredWidth / viewport.width;
         scaledViewport = page.getViewport(scale);
         _t.canvas.height = scaledViewport.height;
+        _t.canvas.width = scaledViewport.width;
         renderContext = {
           canvasContext: _t.ctx,
           viewport: scaledViewport
@@ -226,6 +230,7 @@ sarine.viewer.pdf - v0.14.7 -  Wednesday, January 17th, 2018, 2:45:34 PM
         return renderTask.promise.then(function() {
           _t.pageRendering = false;
           $(".iframe-pdf-div").css("display", "block");
+          $(".popup-loader").css("display", "none");
           if (_t.pageNumPending !== null) {
             _t.renderPage(_t.pageNumPending);
             return _t.pageNumPending = null;
