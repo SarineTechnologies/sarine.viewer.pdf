@@ -1,6 +1,6 @@
 
 /*!
-sarine.viewer.pdf - v0.14.7 -  Thursday, January 18th, 2018, 11:31:23 AM 
+sarine.viewer.pdf - v0.14.7 -  Thursday, January 18th, 2018, 3:13:42 PM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
  */
 
@@ -253,6 +253,12 @@ sarine.viewer.pdf - v0.14.7 -  Thursday, January 18th, 2018, 11:31:23 AM
         return;
       }
       _this.pageNum--;
+      if (_this.pageNum <= 1) {
+        $("#prev").addClass("icon-disable");
+        $("#next").removeClass("icon-disable");
+      } else {
+        $("#prev").removeClass("icon-disable");
+      }
       return _this.queueRenderPage(_this.pageNum);
     };
 
@@ -263,6 +269,12 @@ sarine.viewer.pdf - v0.14.7 -  Thursday, January 18th, 2018, 11:31:23 AM
         return;
       }
       _this.pageNum++;
+      if (_this.pageNum >= _this.pdfDoc.numPages) {
+        $("#next").addClass("icon-disable");
+        $("#prev").removeClass("icon-disable");
+      } else {
+        $("#next").removeClass("icon-disable");
+      }
       return _this.queueRenderPage(_this.pageNum);
     };
 
@@ -292,6 +304,7 @@ sarine.viewer.pdf - v0.14.7 -  Thursday, January 18th, 2018, 11:31:23 AM
           } else {
             $("#pdf-pager").css('display', 'none');
           }
+          $("#prev").addClass("icon-disable");
           return _t.renderPage(_t.pageNum);
         });
       });
@@ -304,7 +317,6 @@ sarine.viewer.pdf - v0.14.7 -  Thursday, January 18th, 2018, 11:31:23 AM
       return _t.pdfDoc.getPage(num).then(function(page) {
         var desiredWidth, renderContext, renderTask, scale, scaledViewport, viewport;
         viewport = page.getViewport(1);
-        desiredWidth = _t.canvas.width;
         desiredWidth = document.getElementsByClassName("iframe-pdf-inside-container")[0].offsetWidth;
         scale = desiredWidth / viewport.width;
         scaledViewport = page.getViewport(scale);
@@ -314,6 +326,7 @@ sarine.viewer.pdf - v0.14.7 -  Thursday, January 18th, 2018, 11:31:23 AM
           canvasContext: _t.ctx,
           viewport: scaledViewport
         };
+        $(".popup-loader").css("display", "block");
         renderTask = page.render(renderContext);
         return renderTask.promise.then(function() {
           _t.pageRendering = false;
