@@ -1,6 +1,6 @@
 
 /*!
-sarine.viewer.pdf - v0.14.7 -  Sunday, January 21st, 2018, 11:38:47 AM 
+sarine.viewer.pdf - v0.14.9 -  Monday, January 22nd, 2018, 10:23:20 AM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
  */
 
@@ -195,9 +195,11 @@ sarine.viewer.pdf - v0.14.7 -  Sunday, January 21st, 2018, 11:38:47 AM
         sliderWrap.before(pdfContainer);
       }
       pdfContainer.css('display', 'block');
+      $("body").addClass('prevent_scroll');
       return closeButton.on('click', ((function(_this) {
         return function() {
           pdfContainer.css('display', 'none');
+          $("body").removeClass('prevent_scroll');
         };
       })(this)));
     };

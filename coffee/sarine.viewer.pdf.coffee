@@ -1,5 +1,5 @@
 ###!
-sarine.viewer.pdf - v0.14.7 -  Sunday, January 21st, 2018, 11:38:48 AM 
+sarine.viewer.pdf - v0.14.9 -  Monday, January 22nd, 2018, 10:23:20 AM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
 ###
 class PDF extends Viewer
@@ -59,7 +59,7 @@ class PDF extends Viewer
 			url = [domain, viewer,src]
 			pdfUrl = url.join("")	
 			iframeElement.attr 'src', pdfUrl
-			#iframeElement.attr 'src', "http://d3oayecwxm3wp6.cloudfront.net/qa4/web-sites/legal/js/LegalJsSDK/PDFViewer/PDFViewerJs.html?file=" + src
+			#iframeElement.attr 'src', "http://s3.amazonaws.com/dev.sarineplatform.com/qa3/web-sites/pdf-viewer-js/web/viewer.html?file=" + src
 
 			closeButton = $('<input type="button" value="Close" id="closePdfReport" class="close-popup-report"/>')
 			openAsLink = $('<div class="open-pdf-link-container"><a href="' + src + '" target="_blank" id="open-pdf-link"  ><svg class="icon icon-external-link">
@@ -79,8 +79,10 @@ class PDF extends Viewer
 
 
 		pdfContainer.css 'display', 'block'
+		$("body").addClass('prevent_scroll')
 		closeButton.on 'click', (=>
 				pdfContainer.css 'display', 'none'
+				$("body").removeClass('prevent_scroll')
 				return
 			)	
 
