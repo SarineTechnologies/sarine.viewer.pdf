@@ -5,6 +5,9 @@
     "type": "git",
     "url": "https://github.com/SarineTechnologies/sarine.viewer.pdf.git"
   },
+  "dependencies": {
+    "sarine.viewer": "https://github.com/SarineTechnologies/sarine.viewer.git#dev"    
+  },
   "version": "0.15.2",
   "devDependencies": {
     "grunt-git-release": "^0.1.3",
