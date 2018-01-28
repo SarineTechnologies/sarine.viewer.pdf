@@ -1,6 +1,6 @@
 
 /*!
-sarine.viewer.pdf - v0.14.9 -  Monday, January 22nd, 2018, 10:23:20 AM 
+sarine.viewer.pdf - v0.14.9 -  Sunday, January 28th, 2018, 12:45:36 PM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
  */
 
@@ -74,7 +74,7 @@ sarine.viewer.pdf - v0.14.9 -  Monday, January 22nd, 2018, 10:23:20 AM
     };
 
     PDF.prototype.initPopup = function(src) {
-      var closeButton, domain, iframeElement, openAsLink, pdfContainer, pdfContainerInside, pdfDiv, pdfUrl, sliderHeight, sliderWrap, url, viewer, _t;
+      var closeButton, domain, iframeElement, isSafari, openAsLink, pdfContainer, pdfContainerInside, pdfDiv, pdfUrl, sliderHeight, sliderWrap, url, viewer, _t;
       _t = this;
       sliderWrap = $("body").children().first();
       pdfContainer = $('#iframe-pdf-container');
@@ -105,13 +105,21 @@ sarine.viewer.pdf - v0.14.9 -  Monday, January 22nd, 2018, 10:23:20 AM
         pdfContainerInside.append(pdfDiv);
         pdfContainer.append(pdfContainerInside);
         sliderWrap.before(pdfContainer);
+        isSafari = /constructor/i.test(window.HTMLElement) || (function(p) {
+          return p.toString() === '[object SafariRemoteNotification]';
+        })(!window['safari'] || typeof safari !== 'undefined' && safari.pushNotification);
+        if (isSafari) {
+          pdfContainer.addClass('safari');
+        }
       }
       pdfContainer.css('display', 'block');
-      $("body").addClass('prevent_scroll');
+      $(".slider-wrap,.dashboard").addClass('prevent_scroll');
+      $(".dashboard").css("height", screen.height + "px");
       return closeButton.on('click', ((function(_this) {
         return function() {
           pdfContainer.css('display', 'none');
-          $("body").removeClass('prevent_scroll');
+          $(".slider-wrap,.dashboard").removeClass('prevent_scroll').css("height", "auto");
+          $(".dashboard").css("height", "auto");
         };
       })(this)));
     };
