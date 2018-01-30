@@ -56,7 +56,6 @@ class PDF extends Viewer
 			url = [domain, viewer,src]
 			pdfUrl = url.join("")	
 			iframeElement.attr 'src', pdfUrl
-			#iframeElement.attr 'src', "http://s3.amazonaws.com/dev.sarineplatform.com/qa3/web-sites/pdf-viewer-js/web/viewer.html?file=" + src
 
 			closeButton = $('<input type="button" value="Close" id="closePdfReport" class="close-popup-report"/>')
 			openAsLink = $('<div class="open-pdf-link-container"><a href="' + src + '" target="_blank" id="open-pdf-link"  ><svg class="icon icon-external-link">
@@ -73,13 +72,20 @@ class PDF extends Viewer
 			pdfContainer.append pdfContainerInside
 			sliderWrap.before pdfContainer
 
+			isSafari = /constructor/i.test(window.HTMLElement) or ((p) ->
+			  p.toString() == '[object SafariRemoteNotification]'
+			)(!window['safari'] or typeof safari != 'undefined' and safari.pushNotification)
+			if isSafari then pdfContainer.addClass('safari')
 
 
 		pdfContainer.css 'display', 'block'
-		$("body").addClass('prevent_scroll')
+		$(".slider-wrap,.dashboard").addClass('prevent_scroll')
+		$(".dashboard").css("height",screen.height+"px")
+
 		closeButton.on 'click', (=>
 				pdfContainer.css 'display', 'none'
-				$("body").removeClass('prevent_scroll')
+				$(".slider-wrap,.dashboard").removeClass('prevent_scroll').css("height","auto")
+				$(".dashboard").css("height","auto")
 				return
 			)	
 
