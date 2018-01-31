@@ -67,7 +67,7 @@ class PDF extends Viewer
 </svg></a></div>')
 
 			pdfDiv.append openAsLink
-			pdfDiv.append iframeElement
+			#pdfDiv.append iframeElement
 			pdfDiv.append closeButton
 
 			pdfContainerInside.append pdfDiv
@@ -88,7 +88,6 @@ class PDF extends Viewer
 			iframeElement.css("height",window.innerHeight-300+"px")
 		else	
 			$(".dashboard").css("height",window.innerHeight+"px")
-			iframeElement.css("height",window.innerHeight-200+"px")
 
 		closeButton.on 'click', (=>
 				pdfContainer.css 'display', 'none'
