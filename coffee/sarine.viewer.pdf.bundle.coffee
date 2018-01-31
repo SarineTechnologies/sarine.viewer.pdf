@@ -1,5 +1,5 @@
 ###!
-sarine.viewer.pdf - v0.14.9 -  Sunday, January 28th, 2018, 12:45:35 PM 
+sarine.viewer.pdf - v0.14.9 -  Wednesday, January 31st, 2018, 9:27:45 AM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
 ###
 
@@ -138,11 +138,11 @@ class PDF extends Viewer
 
 		pdfContainer.css 'display', 'block'
 		$(".slider-wrap,.dashboard").addClass('prevent_scroll')
-		$(".dashboard").css("height",screen.height+"px")
+		$(".dashboard").css("height",window.innerHeight+"px")
 
 		closeButton.on 'click', (=>
 				pdfContainer.css 'display', 'none'
-				$(".slider-wrap,.dashboard").removeClass('prevent_scroll').css("height","auto")
+				$(".slider-wrap,.dashboard").removeClass('prevent_scroll')
 				$(".dashboard").css("height","auto")
 				return
 			)	
