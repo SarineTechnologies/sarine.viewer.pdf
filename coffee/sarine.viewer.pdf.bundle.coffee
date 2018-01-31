@@ -143,11 +143,16 @@ class PDF extends Viewer
 			iframeElement.css("height",window.innerHeight-300+"px")
 		else	
 			$(".dashboard").css("height",window.innerHeight+"px")
+			iframeElement.css("height",window.innerHeight-200+"px")
 
 		closeButton.on 'click', (=>
 				pdfContainer.css 'display', 'none'
 				$(".slider-wrap,.dashboard").removeClass('prevent_scroll')
 				$(".dashboard").css("height","auto")
+				if(isSafari)
+					$('canvas').each( => (index , element)
+						element.width +=0
+					)
 				return
 			)	
 
