@@ -1,6 +1,6 @@
 
 /*!
-sarine.viewer.pdf - v0.14.9 -  Wednesday, January 31st, 2018, 11:24:35 AM 
+sarine.viewer.pdf - v0.14.9 -  Thursday, February 1st, 2018, 9:40:56 AM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
  */
 
@@ -200,8 +200,9 @@ sarine.viewer.pdf - v0.14.9 -  Wednesday, January 31st, 2018, 11:24:35 AM
           pdfContainer.addClass('safari');
         }
       }
-      pdfContainer.css('display', 'block');
       $(".slider-wrap,.dashboard").addClass('prevent_scroll');
+      $("body").children("div:not(.dashboard,.slider-wrap)").addClass("hideclass");
+      pdfContainer.css('display', 'block');
       if (Device.isMobileOrTablet()) {
         $(".dashboard").css("height", window.innerHeight - 100 + "px");
         iframeElement.css("height", window.innerHeight - 300 + "px");
@@ -213,6 +214,7 @@ sarine.viewer.pdf - v0.14.9 -  Wednesday, January 31st, 2018, 11:24:35 AM
           pdfContainer.css('display', 'none');
           $(".slider-wrap,.dashboard").removeClass('prevent_scroll');
           $(".dashboard").css("height", "auto");
+          $("body").children("div:not(.dashboard,.slider-wrap)").removeClass("hideclass");
         };
       })(this)));
     };
