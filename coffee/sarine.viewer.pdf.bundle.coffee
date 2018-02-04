@@ -1,5 +1,5 @@
 ###!
-sarine.viewer.pdf - v0.15.9 -  Thursday, February 1st, 2018, 11:20:33 AM 
+sarine.viewer.pdf - v0.15.10 -  Sunday, February 4th, 2018, 1:48:05 PM 
  The source code, name, and look and feel of the software are Copyright © 2015 Sarine Technologies Ltd. All Rights Reserved. You may not duplicate, copy, reuse, sell or otherwise exploit any portion of the code, content or visual design elements without express written permission from Sarine Technologies Ltd. The terms and conditions of the sarine.com website (http://sarine.com/terms-and-conditions/) apply to the access and use of this software.
 ###
 
@@ -135,7 +135,8 @@ class PDF extends Viewer
 			)(!window['safari'] or typeof safari != 'undefined' and safari.pushNotification)
 			if isSafari then pdfContainer.addClass('safari')
 
-
+		$(".tooltipster-base").hide()
+		
 		pdfContainer.css 'display', 'block'
 		$(".dashboard").hide()
 		if (Device.isMobileOrTablet() and isSafari)
