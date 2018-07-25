@@ -79,6 +79,9 @@ module.exports = function(grunt) {
             bundle: {
                 dest: config.dist.root + '/<%= config.name %>.config',
                 src: [target + '<%= config.name %>.config']
+            },
+            assets:{
+               cwd: target +'assets/' , expand: true, src: ['*'], dest: config.dist.assets
             }
         },
          watch: {
@@ -106,6 +109,7 @@ module.exports = function(grunt) {
         'clean:postbuild',
         'copyVersion',
         'copy:bundle',
+        'copy:assets',
         'clean:bundlecoffee' //remove bundle.coffe file - not necessary
     ]);
 
@@ -133,7 +137,8 @@ module.exports = function(grunt) {
             grunt.log.writeln("dist is github folder");
 
             return {
-                root: 'app/dist/'
+                root: 'app/dist/',
+                assets : 'app/assets/pdf/'
             }
         }
         else
@@ -141,7 +146,8 @@ module.exports = function(grunt) {
             grunt.log.writeln("dist is local");
 
             return {
-                root: '../../../dist/content/viewers/atomic/v1/js/'
+                root: '../../../dist/content/viewers/atomic/v1/js/',
+                assets :'../../../dist/content/viewers/atomic/v1/assets/pdf/'
             }
         }
     }

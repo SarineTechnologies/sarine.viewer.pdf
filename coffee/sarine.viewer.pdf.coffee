@@ -32,7 +32,7 @@ class PDF extends Viewer
 				if(!canvas.hasClass('no_stone'))
 					if((pdfConfig &&  pdfConfig.mode && pdfConfig.mode == "popup" )|| _t.element.data("mode") == "popup" ) 
 						canvas.on 'click', (e) => _t.initPopup(_t.fullSrc )
-						resourcesPrefix = _t.baseUrl + "atomic/v1/assets/"
+						resourcesPrefix = _t.baseUrl + "atomic/v1/assets/pdf/"
 						resources = [{element:'link', src: resourcesPrefix + 'external-pdf-popup.css' }]
 						_t.loadAssets(resources, null)
 					else canvas.on 'click', (e) => window.open(_t.fullSrc , '_blank') 
