@@ -1,0 +1,116 @@
+.close-popup-report {
+  position: relative;
+  float: right;
+  cursor: pointer;
+}
+#iframe-pdf {
+  width: 100%;
+  height: 85%;
+  background-color: inherit;
+  opacity: 1;
+}
+@media screen and (orientation: landscape) {
+  .iframe-pdf-inside-container.mobile #iframe-pdf {
+    height: 80%;
+  }
+}
+@media screen and (orientation: portrait) {
+  .iframe-pdf-inside-container.mobile #iframe-pdf {
+    height: 80%;
+  }
+}
+@media screen and (orientation: landscape) {
+  #iframe-pdf-container.safari #iframe-pdf {
+    height: 70%;
+  }
+}
+.iframe-pdf-inside-container.mobile {
+  width: 100%;
+}
+@media screen and (orientation: landscape) {
+  .iframe-pdf-inside-container.mobile {
+    margin-top: 0px;
+    height: 100%;
+  }
+}
+@media screen and (orientation: portrait) {
+  .iframe-pdf-inside-container.mobile {
+    margin-top: 10%;
+    height: 95%;
+  }
+}
+.iframe-pdf-inside-container {
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+  width: 60%;
+  margin: 0 auto;
+  height: 800px;
+}
+@media screen and (min-width: 800px) {
+  .iframe-pdf-inside-container {
+    overflow: hidden !important;
+  }
+}
+#iframe-pdf-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99999999;
+  background: rgba(53, 53, 53, 0.95);
+}
+#iframe-pdf-container .loader .pre-load {
+  margin-top: 120px;
+}
+#iframe-pdf-container .loader {
+  background-color: transparent;
+}
+.iframe-popup-container-hide {
+  overflow-y: hidden !important;
+}
+.icon-disable {
+  cursor: not-allowed;
+}
+#open-pdf-link {
+  float: right;
+  display: block;
+  height: 16px;
+  margin: 2px 2px;
+}
+.open-pdf-link-container {
+  background: white;
+  height: 28px;
+  padding: 4px;
+}
+.icon-external-link {
+  display: inline-block;
+  width: 18px;
+  height: 26px;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+.iframe-pdf-inside-container.mobile .close-popup-report {
+  margin-right: 10px;
+  height: 20px;
+  font-size: 14px;
+}
+.iframe-pdf-div {
+  height: 800px;
+  margin-top: 30px;
+}
+.iframe-pdf-inside-container.mobile .iframe-pdf-div {
+  height: 100%;
+  margin-top: 0;
+}
+#pdf-pager {
+  width: 50%;
+  float: left;
+}
+.prevent_scroll {
+  overflow: hidden;
+}
+.hideclass {
+  display: none;
+}

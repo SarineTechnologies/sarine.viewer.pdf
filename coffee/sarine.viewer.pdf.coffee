@@ -1,7 +1,7 @@
 class PDF extends Viewer
 	constructor: (options) ->
 		super(options)
-		{@pdfName, @limitSize, @mode} = options   	
+		{@pdfName, @limitSize, @mode,@baseUrl} = options   	
 		@limitSize = @limitSize || 250	
 		
 	convertElement : () -> 
@@ -30,7 +30,11 @@ class PDF extends Viewer
 				_t.element.append(canvas) 
 
 				if(!canvas.hasClass('no_stone'))
-					if((pdfConfig &&  pdfConfig.mode && pdfConfig.mode == "popup" )|| _t.element.data("mode") == "popup" ) then canvas.on 'click', (e) => _t.initPopup(_t.fullSrc )
+					if((pdfConfig &&  pdfConfig.mode && pdfConfig.mode == "popup" )|| _t.element.data("mode") == "popup" ) 
+						canvas.on 'click', (e) => _t.initPopup(_t.fullSrc )
+						resourcesPrefix = _t.baseUrl + "atomic/v1/assets/pdf/"
+						resources = [{element:'link', src: resourcesPrefix + 'external-pdf-popup.css' }]
+						_t.loadAssets(resources, null)
 					else canvas.on 'click', (e) => window.open(_t.fullSrc , '_blank') 
 					canvas.attr {'style':'cursor:pointer;'}
 				defer.resolve(_t)											
@@ -38,6 +42,7 @@ class PDF extends Viewer
 
 	initPopup : (src)=>
 	 _t = @
+
 		sliderWrap = $("body").children().first()
 		pdfContainer = $('#iframe-pdf-container')
 		iframeElement = $('#iframe-pdf')
