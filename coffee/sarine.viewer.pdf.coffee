@@ -18,27 +18,31 @@ class PDF extends Viewer
 		if (configArray.length != 0)
 			pdfConfig = configArray[0]
 
-		@previewSrc = if @fullSrc.indexOf('?') == -1 then @fullSrc + '.png' else (@fullSrc.split('?')[0] + '.png?' + @fullSrc.split('?')[1])		
-		@loadImage(@previewSrc).then((img)->  	
-				canvas = $("<canvas>") 
-				imgName = if (img.src == _t.callbackPic || img.src.indexOf('data:image') != -1) then 'PDF-thumb no_stone' else 'PDF-thumb'	
-				ctx = canvas[0].getContext('2d')	
-				imgDimensions = _t.scaleImage(img)				
+		@pdfUrl = stones[0].viewers.externalPdf
+		if(pdfConfig &&  pdfConfig.labtype && pdfConfig.labtype == "Sarine")
+			@pdfUrl = stones[0].viewers.SarineCertificateAsset
+		
+		@previewSrc = if @pdfUrl == undefined then null else if @pdfUrl.indexOf('?') == -1 then @pdfUrl + '.png' else (@pdfUrl.split('?')[0] + '.png?' + @pdfUrl.split('?')[1])
 
-				canvas.attr({width : imgDimensions.width, height : imgDimensions.height, class : imgName})		
-				ctx.drawImage(img, 0, 0, imgDimensions.width, imgDimensions.height)
-				_t.element.append(canvas) 
-
-				if(!canvas.hasClass('no_stone'))
-					if((pdfConfig &&  pdfConfig.mode && pdfConfig.mode == "popup" )|| _t.element.data("mode") == "popup" ) 
-						canvas.on 'click', (e) => _t.initPopup(_t.fullSrc )
-						resourcesPrefix = _t.baseUrl + "atomic/v1/assets/pdf/"
-						resources = [{element:'link', src: resourcesPrefix + 'external-pdf-popup.css' }]
-						_t.loadAssets(resources, null)
-					else canvas.on 'click', (e) => window.open(_t.fullSrc , '_blank') 
-					canvas.attr {'style':'cursor:pointer;'}
-				defer.resolve(_t)											
+		if(@previewSrc == null)
+			@loadNoStone().then((img) ->
+				_t.createTumbnail(img)
+				defer.resolve(_t)
 			)
+		else
+			@loadImage(@previewSrc).then((img)->  	
+					_t.createTumbnail(img)
+					canvas = $("<canvas>")
+					if(!canvas.hasClass('no_stone'))
+						if((pdfConfig &&  pdfConfig.mode && pdfConfig.mode == "popup" )|| _t.element.data("mode") == "popup" ) 
+							canvas.on 'click', (e) => _t.initPopup(_t.fullSrc )
+							resourcesPrefix = _t.baseUrl + "atomic/v1/assets/pdf/"
+							resources = [{element:'link', src: resourcesPrefix + 'external-pdf-popup.css' }]
+							_t.loadAssets(resources, null)
+						else canvas.on 'click', (e) => window.open(_t.fullSrc , '_blank') 
+						canvas.attr {'style':'cursor:pointer;'}
+					defer.resolve(_t)											
+				)
 
 	initPopup : (src)=>
 	 _t = @
@@ -129,6 +133,14 @@ class PDF extends Viewer
 		defer  
 	play : () -> return 
 	stop : () -> return
+	createTumbnail: (img) =>
+		canvas = $("<canvas>")
+		imgName = if (img.src == @callbackPic || img.src.indexOf('data:image') != -1) then 'PDF-thumb no_stone' else 'PDF-thumb'	
+		ctx = canvas[0].getContext('2d')	
+		imgDimensions = @scaleImage(img)		
+		canvas.attr({width : imgDimensions.width, height : imgDimensions.height, class : imgName})		
+		ctx.drawImage(img, 0, 0, imgDimensions.width, imgDimensions.height)
+		@element.append(canvas) 
 
 @PDF = PDF
  
