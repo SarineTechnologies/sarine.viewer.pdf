@@ -1,13 +1,20 @@
 class PDF extends Viewer
 	constructor: (options) ->
 		super(options)
+<<<<<<< HEAD
 		{@pdfName, @limitSize, @mode,@baseUrl} = options   	
 		@limitSize = @limitSize || 250	
 		
 	convertElement : () -> 
+=======
+		{@pdfName, @limitSize} = options
+		@limitSize = @limitSize || 250
+
+	convertElement : () ->
+>>>>>>> origin
 		@element
 
-	first_init : ()-> 
+	first_init : ()->
 		defer = $.Deferred()
 		#@fullSrc = if @src.indexOf('##FILE_NAME##') != -1 then @src.replace '##FILE_NAME##' , @pdfName else @src + @pdfName 
 		@fullSrc = @src
