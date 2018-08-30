@@ -1,17 +1,10 @@
 class PDF extends Viewer
 	constructor: (options) ->
 		super(options)
-<<<<<<< HEAD
 		{@pdfName, @limitSize, @mode,@baseUrl} = options   	
 		@limitSize = @limitSize || 250	
 		
 	convertElement : () -> 
-=======
-		{@pdfName, @limitSize} = options
-		@limitSize = @limitSize || 250
-
-	convertElement : () ->
->>>>>>> origin
 		@element
 
 	first_init : ()->
