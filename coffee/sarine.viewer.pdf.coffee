@@ -32,14 +32,14 @@ class PDF extends Viewer
 		else
 			@loadImage(@previewSrc).then((img)->  	
 					_t.createTumbnail(img)
-					canvas = $("<canvas>")
+					canvas = $(".PDF-thumb")
 					if(!canvas.hasClass('no_stone'))
 						if((pdfConfig &&  pdfConfig.mode && pdfConfig.mode == "popup" )|| _t.element.data("mode") == "popup" ) 
-							canvas.on 'click', (e) => _t.initPopup(_t.fullSrc )
+							canvas.on 'click', (e) => _t.initPopup(_t.pdfUrl )
 							resourcesPrefix = _t.baseUrl + "atomic/v1/assets/pdf/"
 							resources = [{element:'link', src: resourcesPrefix + 'external-pdf-popup.css' }]
 							_t.loadAssets(resources, null)
-						else canvas.on 'click', (e) => window.open(_t.fullSrc , '_blank') 
+						else canvas.on 'click', (e) => window.open(_t.pdfUrl , '_blank') 
 						canvas.attr {'style':'cursor:pointer;'}
 					defer.resolve(_t)											
 				)
