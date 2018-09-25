@@ -1,17 +1,10 @@
 class PDF extends Viewer
 	constructor: (options) ->
 		super(options)
-<<<<<<< HEAD
-		{@pdfName, @limitSize, @mode,@baseUrl} = options   	
-		@limitSize = @limitSize || 250	
-		
-	convertElement : () -> 
-=======
 		{@pdfName, @limitSize} = options
 		@limitSize = @limitSize || 250
 
 	convertElement : () ->
->>>>>>> origin
 		@element
 
 	first_init : ()->
@@ -29,7 +22,7 @@ class PDF extends Viewer
 		if(pdfConfig &&  pdfConfig.labtype && pdfConfig.labtype.toLowerCase() == "sarine")
 			@pdfUrl = stones[0].viewers.SarineCertificateAsset
 		
-		@previewSrc = if @pdfUrl == undefined then null else if @pdfUrl.indexOf('?') == -1 then @pdfUrl + '.png' else (@pdfUrl.split('?')[0] + '.png?' + @pdfUrl.split('?')[1])
+		@previewSrc = if @pdfUrl == undefined then null else if @pdfUrl == null then null else if @pdfUrl.indexOf('?') == -1 then @pdfUrl + '.png' else (@pdfUrl.split('?')[0] + '.png?' + @pdfUrl.split('?')[1])
 
 		if(@previewSrc == null)
 			@loadNoStone().then((img) ->
