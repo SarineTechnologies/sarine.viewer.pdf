@@ -32,7 +32,7 @@ class PDF extends Viewer
 		else
 			@loadImage(@previewSrc).then((img)->  	
 					_t.createTumbnail(img)
-					canvas = $(".PDF-thumb")
+					canvas = _t.element.find('.PDF-thumb')
 					if(!canvas.hasClass('no_stone'))
 						if((pdfConfig &&  pdfConfig.mode && pdfConfig.mode == "popup" )|| _t.element.data("mode") == "popup" ) 
 							canvas.on 'click', (e) => _t.initPopup(_t.pdfUrl )
