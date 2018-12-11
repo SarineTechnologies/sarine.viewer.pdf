@@ -18,10 +18,8 @@ class PDF extends Viewer
 		if (configArray.length != 0)
 			pdfConfig = configArray[0]
 
-		@pdfUrl = stones[0].viewers.externalPdf
-		if(pdfConfig &&  pdfConfig.labtype && pdfConfig.labtype.toLowerCase() == "sarine")
-			@pdfUrl = stones[0].viewers.sarineCertificatePdf
-		
+		@pdfUrl = if stones[0].viewers.sarineCertificatePdf && stones[0].viewers.sarineCertificatePdf!=""  then stones[0].viewers.sarineCertificatePdf else stones[0].viewers.externalPdf
+
 		@previewSrc = if @pdfUrl == undefined then null else if @pdfUrl == null then null else if @pdfUrl.indexOf('?') == -1 then @pdfUrl + '.png' else (@pdfUrl.split('?')[0] + '.png?' + @pdfUrl.split('?')[1])
 		
 		if(@previewSrc == null)
